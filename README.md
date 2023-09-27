@@ -34,3 +34,28 @@ at a specified cost to yourself
 - As a user, I want to be able to add my properties to a list that I can view
 - As a user, I want to be able to have a choice of different moves I can make
 - As a user, I want to be able to know where I currently am on the board
+
+
+## Idea #2
+
+# My Team Manager
+## A passion project by Noah
+
+My Team Manager is an application where you
+can keep track of information surrounding your
+soccer team. This project will provide the 
+functionality of storing information about a team 
+that can be accessed as statistics. For example seeing
+the top goalscorer on your team. This applicaition
+will be used by coaches and managers of soccer teams
+who want to keep track of their teams performance
+and access statistics in order to make decisions about 
+the team. I am interested in this project because as
+someone who plays in a soccer league I would like a 
+software to manage all of our past games.
+
+## User Stories
+- As a user I want to be able to log past games to a team
+- As a user I want to be able to access a list of all games a player has scored in
+- As a user I want to be able to create as many teams as I want
+- As a user I want to be able to add and remove players from a team
