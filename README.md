@@ -24,8 +24,13 @@ the opportunity to buy it
 - Landing on a property owned by someone else
 forces you to pay rent
 - Landing on your own property provides you with
-the opportunity to 2x the rent 
+the opportunity to add a hotel.
 at a specified cost to yourself
 - The game ends when one player runs out of money
 
- 
+
+## User Stories
+- As a user, I want to be able to add hotels on properties
+- As a user, I want to be able to add my properties to a list that I can view
+- As a user, I want to be able to have a choice of different moves I can make
+- As a user, I want to be able to know where I currently am on the board
