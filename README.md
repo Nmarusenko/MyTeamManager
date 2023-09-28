@@ -13,7 +13,7 @@ it into code.
 
 **Rules** of the game:
 - The player is given 5 cards in their hand
-and 15 cards in their bank
+and 10 cards in their bank
 - There are two piles in the middle to play on
 - The user puts a card from their hand on an 
 appropriate pile in the middle. 
@@ -63,7 +63,6 @@ software to manage all of our past games.
 ## Idea #3
 
 # Poco Monopoly
-## A passion project by Noah
 
 Poco Monopoly is a knockoff *Monopoly*
 with some changes to the structure of the game.
@@ -98,3 +97,28 @@ The **rules** are as follows:
 - As a user, I want to be able to add my properties to a list that I can view
 - As a user, I want to be able to have a choice of different moves I can make
 - As a user, I want to be able to know where I currently am on the board
+
+
+# Idea #4
+## Money Splitter
+For my project I want to be able to log purchases from
+an individual and split them accordingly amongst 
+however many people they want. This software will be
+used by people wanting to split money between their friends
+and have money they owe others accumulate and cancel out. 
+This project is of interest to me because it is hard to
+keep track of splitting money expenses with your friends
+and someone always gets the short end of the stick. This
+software will solve that problem that many people 
+(especially broke university students) face. 
+
+# User Stories
+
+- As a user I want to be able to create logs of my purchases
+and store them in a tracker. 
+- As a user, I want to be able to view all my past expenses
+- As a user, I want to be able to view all the people that
+owe money and need to receive money. 
+- As a user, I want to be able to unequally share the price
+- of items amongst others based on the amount of shares
+they have used
