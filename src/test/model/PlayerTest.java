@@ -1,5 +1,5 @@
 package model;
 
-class MyModelTest {
+class PlayerTest {
     // delete or rename this class!
 }
