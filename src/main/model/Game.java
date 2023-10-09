@@ -30,9 +30,11 @@ public class Game {
     // MODIFIES: this
     // EFFECTS: sets homeTeamGoals and scorers
     public void setHomeGoals(List<Integer> scorers) {
-        // STUB
+        this.homeGoalScorers = scorers;
+        this.homeTeamGoals = scorers.size();
     }
 
+    // REQUIRES: goals is non-negative
     public void setAwayTeamGoals(int goals) {
         this.awayTeamGoals = goals;
     }
@@ -43,6 +45,7 @@ public class Game {
     public String getHomeTeam() {
         return homeTeam;
     }
+
     public String getAwayTeam() {
         return awayTeam;
     }

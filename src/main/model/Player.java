@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.Math;
 
 public class Player {
     // Represents a player on a team
@@ -17,18 +18,32 @@ public class Player {
         this.ratings = new ArrayList<Double>();
     }
 
-
-    // EFFECTS: if ratings is empty return 0, otherwise computer average
-    //          of ratings and returns to 1 decimal place.
+    // REQUIRES: ratings must not be empty
+    // EFFECTS: computes average of ratings and returns to 1 decimal place rounding down
     public double averageRating() {
-        return 1; // STUB
+        double sum = 0;
+        for (double number : ratings) {
+            sum = sum + number;
+        }
+        int average = (int) (10* sum / ratings.size());
+        double roundedAverage = (double) average / 10;
+        return roundedAverage;
+
     }
 
-    // REQUIRES: number is in [0, 10]
+
     // MODIFIES: this
     // EFFECTS: adds number to list of game ratings
-    public void addRating(double number) {
-
+    //          returns true if added successfully, false otherwise.
+    //          successful if number is in [0, 10]
+    public Boolean addRating(double number) {
+        if (0 <= number && number <= 10) {
+            ratings.add(number);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 
@@ -36,6 +51,10 @@ public class Player {
 
 
     // get methods
+
+    public void setGoals(int goals) {
+        this.goals = goals;
+    }
 
     public String getName() {
         return name;
