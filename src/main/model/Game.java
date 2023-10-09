@@ -11,7 +11,7 @@ public class Game {
     private int awayTeamGoals;
     private List<Integer> homeGoalScorers;
 
-    public Game(String teamHome, String teamAway){
+    public Game(String teamHome, String teamAway) {
         this.homeTeam = teamHome;
         this.awayTeam = teamAway;
         this.homeTeamGoals = 0;
@@ -61,8 +61,6 @@ public class Game {
     public List<Integer> getHomeGoalScorers() {
         return homeGoalScorers;
     }
-
-
 
 
 }

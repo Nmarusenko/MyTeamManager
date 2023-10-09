@@ -25,7 +25,7 @@ public class Player {
         for (double number : ratings) {
             sum = sum + number;
         }
-        int average = (int) (10* sum / ratings.size());
+        int average = (int) (10 * sum / ratings.size());
         double roundedAverage = (double) average / 10;
         return roundedAverage;
 
@@ -40,14 +40,10 @@ public class Player {
         if (0 <= number && number <= 10) {
             ratings.add(number);
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
-
-
-
 
 
     // get methods

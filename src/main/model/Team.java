@@ -3,13 +3,12 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Team{
+public class Team {
 
     private String name;
     private List<Player> players;
     private List<Game> games;
     private int points;
-
 
 
     public Team(String name) { //constructor
@@ -35,8 +34,7 @@ public class Team{
         for (Game game : games) {
             if (game.getHomeTeamGoals() > game.getAwayTeamGoals()) {
                 points = points + 3; // WIN
-            }
-            else if (game.getHomeTeamGoals() == game.getAwayTeamGoals()) {
+            } else if (game.getHomeTeamGoals() == game.getAwayTeamGoals()) {
                 points = points + 1; // TIE
             }
         }
@@ -68,8 +66,7 @@ public class Team{
         }
         if (numbers.contains(newNumber)) {
             return false;
-        }
-        else {
+        } else {
             players.add(newPlayer);
             return true;
         }
@@ -94,9 +91,6 @@ public class Team{
         }
         return display;
     }
-
-
-
 
 
     // get methods
