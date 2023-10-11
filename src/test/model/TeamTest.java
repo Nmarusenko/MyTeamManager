@@ -181,5 +181,9 @@ public class TeamTest {
         assertEquals(scores, testTeam2.displayGames());
     }
 
+    @Test
+    void findPlayerOnce() {
+        assertEquals(p1, testTeam2.findPlayer("Noah", 10));
+    }
 
 }

@@ -1,6 +1,7 @@
 package ui;
 
 import model.Game;
+import model.Player;
 import model.Team;
 
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class TeamManager {
     private void displayOptions(String name) {
         System.out.println("Chose an option below:");
         System.out.println("\tP -> manage PLAYERS on " + name);
-        System.out.println("\tG -> Manage GAMES from " + name);
+        System.out.println("\tG -> Manage GAMES for " + name);
         System.out.println("\tQ -> Quit");
     }
 
@@ -63,8 +64,103 @@ public class TeamManager {
 
     // EFFECTS: all functionality for adding players
     private void playerMenu() {
-        displayPlayerOptions();
-        // IMPLEMENT FUNCTIONALITY
+        Boolean runPlayerMenu = true;
+        while (runPlayerMenu) {
+            displayPlayerOptions();
+            String playerChoice = input.next();
+            playerChoice = playerChoice.toLowerCase();
+            if (playerChoice.equals("a")) {
+                addPlayer();
+            } else if (playerChoice.equals("g")) {
+                addGameRating();
+            } else if (playerChoice.equals("r")) {
+                removePlayer();
+            } else if (playerChoice.equals("v")) {
+                viewPlayers();
+            } else if (playerChoice.equals("c")) {
+                checkAveragePlayerRating();
+            } else if (playerChoice.equals("b")) {
+                runPlayerMenu = false;
+            } else {
+                System.out.println("Invalid input, please try again");
+            }
+        }
+    }
+
+    private void addPlayer() {
+        System.out.println("What is the player's name?");
+        String name = input.next();
+        System.out.println("What is " + name + "'s number?");
+        int number = Integer.valueOf(input.next());
+        Player player = new Player(name, number);
+        Boolean success = myTeam.addPlayer(player);
+        if (success) {
+            System.out.println(name + ", " + number + " - added to " + myTeam.getName() + ", returning to Player menu");
+        } else {
+            System.out.println("Unable to add player, shares same number as another player on " + myTeam.getName());
+        }
+    }
+
+    private void addGameRating() {
+        System.out.println("What is the player's name?");
+        String name = input.next();
+        System.out.println("What is " + name + "'s number?");
+        int number = Integer.valueOf(input.next());
+        Player player = myTeam.findPlayer(name, number);
+        if (player == null) {
+            System.out.println("Unable to add rating for player, check name and number");
+        } else {
+            System.out.println("Give player rating between 0-10");
+            double rating = Double.valueOf(input.next());
+            Boolean success = player.addRating(rating);
+            if (success) {
+                System.out.println("Successfully added rating");
+            } else {
+                System.out.println("Unable to successfully add rating");
+            }
+        }
+    }
+
+
+    private void removePlayer() {
+        System.out.println("What is the player's name?");
+        String name = input.next();
+        System.out.println("What is " + name + "'s number?");
+        int number = Integer.valueOf(input.next());
+        Boolean success = myTeam.removePlayer(name, number);
+        if (success) {
+            System.out.println("Successfully removed " + name + ", returning to Player menu");
+        } else {
+            System.out.println("Could not remove player, check name and number is correct");
+        }
+    }
+
+    private void viewPlayers() {
+        List<String> list = myTeam.viewAllPlayers();
+        if (list.size() == 0) {
+            System.out.println("There are no players on this team");
+        } else {
+            System.out.println("Here are the players on " + myTeam.getName() + ":");
+            for (String player : list) {
+                System.out.println(player);
+            }
+        }
+        System.out.println("Returning to Player menu");
+    }
+
+    private void checkAveragePlayerRating() {
+        System.out.println("What is the player's name?");
+        String name = input.next();
+        System.out.println("What is " + name + "'s number?");
+        int number = Integer.valueOf(input.next());
+        Player player = myTeam.findPlayer(name, number);
+        if (player == null) {
+            System.out.println("Unable to find player, returning to Player menu");
+        } else {
+            double rating = player.averageRating();
+            System.out.println("The average rating for " + name + " is " + rating);
+            System.out.println("Returning to Player menu");
+        }
     }
 
     private void displayPlayerOptions() {
@@ -88,7 +184,6 @@ public class TeamManager {
             gameChoice = gameChoice.toLowerCase();
             if (gameChoice.equals("c")) {
                 createGame();
-                runGameMenu = false;
             } else if (gameChoice.equals("v")) {
                 viewGames();
             } else if (gameChoice.equals("b")) {
@@ -121,31 +216,29 @@ public class TeamManager {
     }
 
     private void createGame() {
-        String awayName = null;
-        String happyWithGame = null;
         int awayGoals = 0;
         int homeGoals = 0;
         List<Integer> homeGoalScorers = new ArrayList<Integer>();
         System.out.println("What is the opponent team's name?");
-        awayName = input.next();
+        String awayName = input.next();
         Game game = new Game(myTeam.getName(), awayName);
-        System.out.println("How many goals did the opponent score?");
+        System.out.println("How many goals did " + awayName + " score?");
         awayGoals = Integer.valueOf(input.next());
         System.out.println("How many goals did " + myTeam.getName() + " score?");
         homeGoals = Integer.valueOf(input.next());
         for (int i = 1; i <= homeGoals; i++) {
             int scorer = 0;
-            System.out.println("Who (jersey number )scored goal #" + i + " for the " + myTeam.getName() + "?");
+            System.out.println("Who (jersey number) scored goal #" + i + " for the " + myTeam.getName() + "?");
             scorer = Integer.valueOf(input.next());
-            System.out.println("adding #" + scorer + " to goal scorers");
             homeGoalScorers.add(scorer);
         }
         game.setHomeGoals(homeGoalScorers);
         game.setAwayTeamGoals(awayGoals);
         myTeam.addGame(game);
         System.out.println("The following has been added to " + myTeam.getName() + " games");
-        System.out.println("\t" + game.displayGame() + " with " + myTeam.getName() + " goalscorers: " + homeGoalScorers);
-        System.out.println("Returning to Team menu");
+        System.out.println("\t" + game.displayGame() + " with " + myTeam.getName()
+                + " goalscorers: " + homeGoalScorers);
+        System.out.println("Returning to Game menu");
     }
 }
 

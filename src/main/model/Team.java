@@ -72,6 +72,25 @@ public class Team {
         }
     }
 
+    // EFFECTS: constructs a list of strings with players name and number
+    public List<String> viewAllPlayers() {
+        List<String> list = new ArrayList<String>();
+        for (Player player : players) {
+            list.add(player.getName() + ", " + player.getJerseyNum());
+        }
+        return list;
+    }
+
+    // REQUIRES: There are no duplicate players in the list
+    public Player findPlayer(String name, int number) {
+        for (Player player : players) {
+            if (player.getName() == name && player.getJerseyNum() == number) {
+                return player;
+            }
+        }
+        return null;
+    }
+
     // MODIFIES: this
     // EFFECTS: removes player if name and number match
     public Boolean removePlayer(String name, int number) {
