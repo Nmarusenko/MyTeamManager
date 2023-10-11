@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// Represents a game score that has a home team, an away team, goals for either team
+// and a list of goalscorers for the home team.
 public class Game {
 
     private String homeTeam;
@@ -11,6 +13,7 @@ public class Game {
     private int awayTeamGoals;
     private List<Integer> homeGoalScorers;
 
+    // EFFECTS: constructs a game with a home team, an away team and a preset score of 0-0
     public Game(String teamHome, String teamAway) {
         this.homeTeam = teamHome;
         this.awayTeam = teamAway;
@@ -19,7 +22,8 @@ public class Game {
         this.homeGoalScorers = new ArrayList<Integer>();
     }
 
-
+    // EFFECTS: Displays the game in the form "HomeTeam #-# AwayTeam"
+    //          where # is a number associated with the score
     public String displayGame() {
         int homeGoals = getHomeTeamGoals();
         int awayGoals = getAwayTeamGoals();
@@ -35,12 +39,11 @@ public class Game {
     }
 
     // REQUIRES: goals is non-negative
+    // MODIFIES: this
+    // EFFECTS: Sets the away teams goals
     public void setAwayTeamGoals(int goals) {
         this.awayTeamGoals = goals;
     }
-
-
-    // get methods
 
     public String getHomeTeam() {
         return homeTeam;

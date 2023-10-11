@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// Represents a team. A team has a name, a list of players that play for that team,
+// a list of games that team has played in, and a number of points earned across those games
 public class Team {
 
     private String name;
@@ -11,6 +13,7 @@ public class Team {
     private int points;
 
 
+    // Constructs a team with given name, no players added, no games added and no points
     public Team(String name) { //constructor
         this.name = name;
         this.players = new ArrayList<Player>();
@@ -72,7 +75,7 @@ public class Team {
         }
     }
 
-    // EFFECTS: constructs a list of strings with players name and number
+    // EFFECTS: constructs a list of strings with players name and number in the form "name, number"
     public List<String> viewAllPlayers() {
         List<String> list = new ArrayList<String>();
         for (Player player : players) {
@@ -104,6 +107,7 @@ public class Team {
         return false;
     }
 
+    // EFFECTS: Constructs a list of all games displayed as a string
     public List<String> displayGames() {
         List<String> display = new ArrayList<String>();
         for (Game game : games) {
@@ -111,9 +115,6 @@ public class Team {
         }
         return display;
     }
-
-
-    // get methods
 
     public String getName() {
         return name;

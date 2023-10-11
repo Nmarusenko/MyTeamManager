@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+// Represents the Team Manager App. The Team Manager App will allow the user to
+// construct a team for themselves and add as many players and games as they want
+// to their team
 public class TeamManager {
     private Team myTeam;
     private Scanner input;
@@ -19,6 +22,8 @@ public class TeamManager {
         input.useDelimiter("\n");
     }
 
+    // EFFECTS: Builds a team with name from user
+    //          Opens team menu and gets next user input
     public void runTeamManager() {
         Boolean runTeamMenu = true;
         String teamName = null;
@@ -43,15 +48,15 @@ public class TeamManager {
         System.out.println("Thank you for using Team Manager. Have a nice day!");
     }
 
-    // EFFECTS: Show menu options
+    // EFFECTS: Displays Team menu options
     private void displayOptions(String name) {
         System.out.println("Chose an option below:");
-        System.out.println("\tP -> manage PLAYERS on " + name);
+        System.out.println("\tP -> Manage PLAYERS on " + name);
         System.out.println("\tG -> Manage GAMES for " + name);
         System.out.println("\tQ -> Quit");
     }
 
-    // EFFECTS: processes choice from team menu
+    // EFFECTS: Processes choice from Team menu
     private void processChoice(String choice) {
         if (choice.equals("p")) {
             playerMenu();
@@ -62,7 +67,7 @@ public class TeamManager {
         }
     }
 
-    // EFFECTS: all functionality for adding players
+    // EFFECTS: Displays the Player menu and processes user input
     private void playerMenu() {
         Boolean runPlayerMenu = true;
         while (runPlayerMenu) {
@@ -87,6 +92,8 @@ public class TeamManager {
         }
     }
 
+    // MODIFIES: Player, Team
+    // EFFECTS: Constructs a player and adds them to the team
     private void addPlayer() {
         System.out.println("What is the player's name?");
         String name = input.next();
@@ -101,6 +108,8 @@ public class TeamManager {
         }
     }
 
+    // MODIFIES: Player
+    // EFFECTS: Adds a game rating to the specified player
     private void addGameRating() {
         System.out.println("What is the player's name?");
         String name = input.next();
@@ -121,7 +130,8 @@ public class TeamManager {
         }
     }
 
-
+    // MODIFIES: Team
+    // EFFECTS: Removes given player from the team
     private void removePlayer() {
         System.out.println("What is the player's name?");
         String name = input.next();
@@ -135,6 +145,7 @@ public class TeamManager {
         }
     }
 
+    // EFFECTS: View a list of all the players on the team
     private void viewPlayers() {
         List<String> list = myTeam.viewAllPlayers();
         if (list.size() == 0) {
@@ -148,6 +159,7 @@ public class TeamManager {
         System.out.println("Returning to Player menu");
     }
 
+    // EFFECTS: Prints out the average rating of a specified player
     private void checkAveragePlayerRating() {
         System.out.println("What is the player's name?");
         String name = input.next();
@@ -163,8 +175,9 @@ public class TeamManager {
         }
     }
 
+    // EFFECTS: Displays the Player menu
     private void displayPlayerOptions() {
-        System.out.println("What would you like to do with players on " + myTeam.getName());
+        System.out.println("What would you like to do with players on " + myTeam.getName() + "?");
         System.out.println("\tA -> Add a player to " + myTeam.getName());
         System.out.println("\tG -> Add a Game rating for a player");
         System.out.println("\tR -> Remove a player from " + myTeam.getName());
@@ -173,7 +186,7 @@ public class TeamManager {
         System.out.println("\tB -> Go back, return to Team menu");
     }
 
-    // EFFECTS: all functionality for games
+    // EFFECTS: Displays the game menu and processes user input
     private void gameMenu() {
         Boolean runGameMenu = true;
 
@@ -195,6 +208,7 @@ public class TeamManager {
         }
     }
 
+    // EFFECTS: Displays Team menu
     private void displayGameOptions() {
         System.out.println("What would you like to do with games");
         System.out.println("\tC -> Create a new " + myTeam.getName() + " game");
@@ -202,6 +216,7 @@ public class TeamManager {
         System.out.println("\tB -> Go back, return to Team menu");
     }
 
+    // EFFECTS: Prints out all games associated with the team
     private void viewGames() {
         List<Game> list = myTeam.getGames();
         int size = list.size();
@@ -215,6 +230,8 @@ public class TeamManager {
         }
     }
 
+    // MODIFIES: Game, Team
+    // EFFECTS: Creates a game and adds it to the team
     private void createGame() {
         int awayGoals = 0;
         int homeGoals = 0;

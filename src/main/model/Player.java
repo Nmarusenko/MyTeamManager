@@ -2,15 +2,17 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.Math;
 
+// Represents a player of a team. A player has a name, jersey number, amount of goals scored
+// and a list of player ratings.
 public class Player {
-    // Represents a player on a team
+
     private String name;
     private int goals;
     private int jerseyNum;
     private List<Double> ratings;
 
+    // Constructs a player with a given name, given jersey number, no goals and no match ratings
     public Player(String name, int number) {
         this.name = name;
         this.jerseyNum = number;
@@ -19,6 +21,7 @@ public class Player {
     }
 
     // REQUIRES: ratings must not be empty
+    // MODIFIES: N/A
     // EFFECTS: computes average of ratings and returns to 1 decimal place rounding down
     public double averageRating() {
         double sum = 0;
@@ -46,8 +49,9 @@ public class Player {
     }
 
 
-    // get methods
-
+    // REQUIRES: goals is non-negative
+    // MODIFIES: this
+    // EFFECTS: Sets the goals for a player
     public void setGoals(int goals) {
         this.goals = goals;
     }
