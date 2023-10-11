@@ -88,7 +88,7 @@ public class Team {
     // EFFECTS: Returns the player with given name and number, otherwise null
     public Player findPlayer(String name, int number) {
         for (Player player : players) {
-            if (player.getName() == name && player.getJerseyNum() == number) {
+            if ((player.getName()).equals(name) && player.getJerseyNum() == number) {
                 return player;
             }
         }
@@ -99,7 +99,7 @@ public class Team {
     // EFFECTS: removes player if name and number match
     public Boolean removePlayer(String name, int number) {
         for (Player player : players) {
-            if (player.getJerseyNum() == number && player.getName() == name) {
+            if (player.getJerseyNum() == number && (player.getName()).equals(name)) {
                 players.remove(player);
                 return true;
             }
