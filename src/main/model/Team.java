@@ -82,6 +82,7 @@ public class Team {
     }
 
     // REQUIRES: There are no duplicate players in the list
+    // EFFECTS: Returns the player with given name and number, otherwise null
     public Player findPlayer(String name, int number) {
         for (Player player : players) {
             if (player.getName() == name && player.getJerseyNum() == number) {

@@ -186,4 +186,21 @@ public class TeamTest {
         assertEquals(p1, testTeam2.findPlayer("Noah", 10));
     }
 
+    @Test
+    void viewAllPlayersMultiplePlayers() {
+        List<String> list = new ArrayList<String>();
+        list.add("Noah, 10");
+        list.add("Ronaldo, 7");
+        list.add("Kevin, 17");
+        assertEquals(list, testTeam2.viewAllPlayers());
+    }
+
+    @Test
+    void findPlayerMultiple() {
+        assertEquals(null, testTeam2.findPlayer("James", 2));
+        assertEquals(null, testTeam2.findPlayer("Noah", 2));
+        assertEquals(null, testTeam2.findPlayer("James", 10));
+        assertEquals(p1, testTeam2.findPlayer("Noah", 10));
+    }
+
 }
