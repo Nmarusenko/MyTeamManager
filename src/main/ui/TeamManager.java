@@ -84,6 +84,8 @@ public class TeamManager {
                 viewPlayers();
             } else if (playerChoice.equals("c")) {
                 checkAveragePlayerRating();
+            } else if (playerChoice.equals("s")) {
+                checkPlayerGoals();
             } else if (playerChoice.equals("b")) {
                 runPlayerMenu = false;
             } else {
@@ -106,6 +108,17 @@ public class TeamManager {
         } else {
             System.out.println("Unable to add player, shares same number as another player on " + myTeam.getName());
         }
+    }
+
+    // EFFECTS: asks for a player and then prints their goals
+    private void checkPlayerGoals() {
+        System.out.println("What is the player's name?");
+        String name = input.next();
+        System.out.println("What is " + name + "'s number?");
+        int number = Integer.valueOf(input.next());
+        Player player = myTeam.findPlayer(name, number);
+        int goals = player.getGoals();
+        System.out.println(name + " has " + goals + " goals");
     }
 
     // MODIFIES: Player
@@ -183,6 +196,7 @@ public class TeamManager {
         System.out.println("\tR -> Remove a player from " + myTeam.getName());
         System.out.println("\tV -> View all players on " + myTeam.getName());
         System.out.println("\tC -> Check average player ratings");
+        System.out.println("\tS -> Check how many times a player has scored");
         System.out.println("\tB -> Go back, return to Team menu");
     }
 

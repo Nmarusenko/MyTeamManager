@@ -20,8 +20,8 @@ software to manage all of our past games.
 - As a user I want to be able to access a list of all players on a team
 - As a user I want to be able to access all the games my team has played
 - As a user I want to be able to navigate through menus to control games and players on my team
-
-
 - As a user I want to be able to view average game ratings from players on my team
 - As a user I want to be able to remove players from a team
 - As a user I want to be able to view how many goals each player on my team has
+- As a user I want to be able to save my team to file
+- As a user I want to be able to have the option to load up a team from file

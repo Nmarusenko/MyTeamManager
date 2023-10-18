@@ -22,7 +22,7 @@ public class Team {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds the game to games, updates points
+    // EFFECTS: adds the game to games, updates points, updates goalscorers
     public void addGame(Game game) {
         games.add(game);
         updatePoints();
