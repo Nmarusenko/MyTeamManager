@@ -1,7 +1,7 @@
 package ui;
 
-import Persistence.JsonReader;
-import Persistence.JsonWriter;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 import model.Game;
 import model.Player;
 import model.Team;

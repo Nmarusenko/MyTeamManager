@@ -1,6 +1,6 @@
 package model;
 
-import Persistence.Writable;
+import persistence.Writable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -137,7 +137,6 @@ public class Team implements Writable {
     }
 
 
-
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
@@ -164,7 +163,6 @@ public class Team implements Writable {
         }
         return jsonArray;
     }
-
 
 
 }

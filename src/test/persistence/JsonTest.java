@@ -1,4 +1,4 @@
-package Persistence;
+package persistence;
 
 
 import model.Game;
@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonTest {
-    protected void checkPlayer(String name, int number, int goals, List<Double> ratings,  Player player) {
+    protected void checkPlayer(String name, int number, int goals, List<Double> ratings, Player player) {
         assertEquals(name, player.getName());
         assertEquals(number, player.getJerseyNum());
         assertEquals(goals, player.getGoals());

@@ -1,6 +1,6 @@
 package model;
 
-import Persistence.Writable;
+import persistence.Writable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
