@@ -1,9 +1,13 @@
 package ui;
 
+import Persistence.JsonReader;
+import Persistence.JsonWriter;
 import model.Game;
 import model.Player;
 import model.Team;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,14 +16,20 @@ import java.util.Scanner;
 // construct a team for themselves and add as many players and games as they want
 // to their team
 public class TeamManager {
+    private static final String JSON_STORE = "./data/myFile.json";
     private Team myTeam;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
 
     // EFFECTS: Runs the Team Manager
     public TeamManager() {
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+        runTeamManager();
     }
 
     // EFFECTS: Builds a team with name from user
@@ -53,6 +63,8 @@ public class TeamManager {
         System.out.println("Chose an option below:");
         System.out.println("\tP -> Manage PLAYERS on " + name);
         System.out.println("\tG -> Manage GAMES for " + name);
+        System.out.println("\tS -> SAVE " + name + " to file");
+        System.out.println("\tL -> LOAD team from file");
         System.out.println("\tQ -> Quit");
     }
 
@@ -62,8 +74,35 @@ public class TeamManager {
             playerMenu();
         } else if (choice.equals("g")) {
             gameMenu();
+        } else if (choice.equals("s")) {
+            saveTeam();
+        } else if (choice.equals("l")) {
+            loadTeam();
         } else {
             System.out.println("Invalid input, please try again");
+        }
+    }
+
+    // EFFECTS: saves the team to file
+    private void saveTeam() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(myTeam);
+            jsonWriter.close();
+            System.out.println("Saved " + myTeam.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads team from file
+    private void loadTeam() {
+        try {
+            myTeam = jsonReader.read();
+            System.out.println("Loaded " + myTeam.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 

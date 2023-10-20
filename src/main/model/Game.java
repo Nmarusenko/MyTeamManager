@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,4 +69,24 @@ public class Game {
     }
 
 
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("home team", homeTeam);
+        json.put("away team", awayTeam);
+        json.put("away team goals", awayTeamGoals);
+        json.put("home goal scorers", homeGoalScorersToJson());
+        return json;
+    }
+
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray homeGoalScorersToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (int scorer : homeGoalScorers) {
+            jsonArray.put(scorer);
+        }
+
+        return jsonArray;
+    }
 }

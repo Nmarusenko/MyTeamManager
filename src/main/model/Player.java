@@ -1,11 +1,15 @@
 package model;
 
+import Persistence.Writable;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents a player of a team. A player has a name, jersey number, amount of goals scored
 // and a list of player ratings.
-public class Player {
+public class Player implements Writable {
 
     private String name;
     private int goals;
@@ -73,4 +77,23 @@ public class Player {
     }
 
 
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("player name", name);
+        json.put("player number", jerseyNum);
+        json.put("player ratings", ratingsToJson());
+        return json;
+    }
+
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray ratingsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Double rating : ratings) {
+            jsonArray.put(rating);
+        }
+
+        return jsonArray;
+    }
 }
