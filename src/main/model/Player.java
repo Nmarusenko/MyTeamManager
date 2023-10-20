@@ -60,6 +60,10 @@ public class Player implements Writable {
         this.goals = goals;
     }
 
+    public void setRatings(List<Double> ratings) {
+        this.ratings = ratings;
+    }
+
     public String getName() {
         return name;
     }

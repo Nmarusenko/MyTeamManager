@@ -1,0 +1,49 @@
+{
+  "players": [
+    {
+      "player name": "Noah",
+      "player number": 8,
+      "player ratings": [
+        7.2,
+        7.8
+      ]
+    },
+    {
+      "player name": "Kohen",
+      "player number": 10,
+      "player ratings": []
+    },
+    {
+      "player name": "Liam",
+      "player number": 7,
+      "player ratings": []
+    },
+    {
+      "player name": "Owen",
+      "player number": 17,
+      "player ratings": [5]
+    }
+  ],
+  "name": "Rangers",
+  "games": [
+    {
+      "away team": "Beans",
+      "away team goals": 3,
+      "home team": "Rangers",
+      "home goal scorers": [
+        8,
+        8
+      ]
+    },
+    {
+      "away team": "Potato",
+      "away team goals": 3,
+      "home team": "Rangers",
+      "home goal scorers": [
+        7,
+        7,
+        10
+      ]
+    }
+  ]
+}

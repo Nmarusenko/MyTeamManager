@@ -63,16 +63,15 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
+    // MODIFIES: team
+    // EFFECTS: parses team from JSON object and adds it to TeamManager
     private void addPlayer(Team team, JSONObject jsonObject) {
         String name = jsonObject.getString("player name");
         int number = jsonObject.getInt("player number");
         Player player = new Player(name, number);
-        JSONArray ratingsArray = jsonObject.getJSONArray("player ratings");
-        ratingsArray.toList();
-        for (Object rating : ratingsArray) {
-            player.addRating((Double) rating);
+        JSONArray ratingsJsonArray = jsonObject.getJSONArray("player ratings");
+        for (int i = 0; i < ratingsJsonArray.length(); i++) {
+            player.addRating(ratingsJsonArray.getDouble(i));
         }
         team.addPlayer(player);
     }
