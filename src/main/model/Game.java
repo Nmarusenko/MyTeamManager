@@ -69,6 +69,7 @@ public class Game {
     }
 
 
+    // EFFECTS: returns a game as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("home team", homeTeam);
@@ -79,7 +80,7 @@ public class Game {
     }
 
 
-    // EFFECTS: returns things in this workroom as a JSON array
+    // EFFECTS: returns home goalscorers from game into a JSON array
     private JSONArray homeGoalScorersToJson() {
         JSONArray jsonArray = new JSONArray();
 

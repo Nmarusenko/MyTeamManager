@@ -25,7 +25,6 @@ public class Player implements Writable {
     }
 
     // REQUIRES: ratings must not be empty
-    // MODIFIES: N/A
     // EFFECTS: computes average of ratings and returns to 1 decimal place rounding down
     public double averageRating() {
         double sum = 0;
@@ -81,6 +80,7 @@ public class Player implements Writable {
     }
 
 
+    // EFFECTS: returns a player as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("player name", name);
@@ -90,7 +90,7 @@ public class Player implements Writable {
     }
 
 
-    // EFFECTS: returns things in this workroom as a JSON array
+    // EFFECTS: returns ratings from a player into a JSON array
     private JSONArray ratingsToJson() {
         JSONArray jsonArray = new JSONArray();
 

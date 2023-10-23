@@ -137,6 +137,7 @@ public class Team implements Writable {
     }
 
 
+    // EFFECTS: returns a team as a JSON object
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
@@ -145,7 +146,7 @@ public class Team implements Writable {
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
+    // EFFECTS: returns the players in this team into a JSON array
     private JSONArray playersToJson() {
         JSONArray jsonArray = new JSONArray();
 
@@ -155,6 +156,7 @@ public class Team implements Writable {
         return jsonArray;
     }
 
+    // EFFECTS: returns the games from a team into a JSON array
     private JSONArray gamesToJson() {
         JSONArray jsonArray = new JSONArray();
 

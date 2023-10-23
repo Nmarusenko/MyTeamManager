@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-// Represents a reader that reads workroom from JSON data stored in file
+// Represents a reader that reads team from JSON data stored in file
 public class JsonReader {
     private String source;
 
@@ -25,7 +25,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads team from file and returns it;
     // throws IOException if an error occurs reading data from file
     public Team read() throws IOException {
         String jsonData = readFile(source);
@@ -44,7 +44,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // EFFECTS: parses team from JSON object and returns it
     private Team parseTeam(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         Team team = new Team(name);
@@ -53,8 +53,8 @@ public class JsonReader {
         return team;
     }
 
-    // MODIFIES: wr
-    // EFFECTS: parses thingies from JSON object and adds them to workroom
+    // MODIFIES: team
+    // EFFECTS: parses players from JSON object and passes to helper method, adding to the team
     private void addPlayers(Team team, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("players");
         for (Object json : jsonArray) {
@@ -64,7 +64,7 @@ public class JsonReader {
     }
 
     // MODIFIES: team
-    // EFFECTS: parses team from JSON object and adds it to TeamManager
+    // EFFECTS: gets players information and adds them to team
     private void addPlayer(Team team, JSONObject jsonObject) {
         String name = jsonObject.getString("player name");
         int number = jsonObject.getInt("player number");
@@ -76,6 +76,8 @@ public class JsonReader {
         team.addPlayer(player);
     }
 
+    // MODIFIES: team
+    // EFFECTS: gets each game from JSON object and passes to helper method, adding to team
     private void addGames(Team team, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("games");
         for (Object json : jsonArray) {
@@ -84,6 +86,8 @@ public class JsonReader {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: Retrieves information of a game and adds the game to team
     private void addGame(Team team, JSONObject jsonObject) {
         String home = jsonObject.getString("home team");
         String away = jsonObject.getString("away team");
