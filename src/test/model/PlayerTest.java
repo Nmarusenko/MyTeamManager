@@ -65,5 +65,16 @@ class PlayerTest {
         assertEquals(6.2, testPlayer.averageRating());
     }
 
+    @Test
+    void testSetRatings() {
+        List<Double> ratings = new ArrayList<Double>();
+        ratings.add(2.3);
+        ratings.add(7.6);
+        testPlayer.setRatings(ratings);
+        assertEquals(2, (testPlayer.getRatings()).size());
+        assertEquals(2.3, (testPlayer.getRatings().get(0)));
+        assertEquals(7.6, (testPlayer.getRatings().get(1)));
+    }
+
 
 }
