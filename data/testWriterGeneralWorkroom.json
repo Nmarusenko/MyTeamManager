@@ -1,0 +1,40 @@
+{
+    "players": [
+        {
+            "player name": "Noah",
+            "player number": 8,
+            "player ratings": []
+        },
+        {
+            "player name": "Kohen",
+            "player number": 10,
+            "player ratings": [
+                7.5,
+                6.5
+            ]
+        }
+    ],
+    "name": "Rangers",
+    "games": [
+        {
+            "away team": "Madrid",
+            "away team goals": 2,
+            "home team": "Rangers",
+            "home goal scorers": [
+                8,
+                10,
+                10
+            ]
+        },
+        {
+            "away team": "Barca",
+            "away team goals": 1,
+            "home team": "Rangers",
+            "home goal scorers": [
+                8,
+                8,
+                8
+            ]
+        }
+    ]
+}
