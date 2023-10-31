@@ -43,7 +43,7 @@ public class TeamManager {
         System.out.println("congratulations! " + teamName + " is now a team!");
 
         while (runTeamMenu) {
-            displayOptions(teamName);
+            displayOptions();
             String choice = null;
             choice = input.next();
             choice = choice.toLowerCase();
@@ -59,11 +59,11 @@ public class TeamManager {
     }
 
     // EFFECTS: Displays Team menu options
-    private void displayOptions(String name) {
+    private void displayOptions() {
         System.out.println("Chose an option below:");
-        System.out.println("\tP -> Manage PLAYERS on " + name);
-        System.out.println("\tG -> Manage GAMES for " + name);
-        System.out.println("\tS -> SAVE " + name + " to file");
+        System.out.println("\tP -> Manage PLAYERS on " + myTeam.getName());
+        System.out.println("\tG -> Manage GAMES for " + myTeam.getName());
+        System.out.println("\tS -> SAVE " + myTeam.getName() + " to file");
         System.out.println("\tL -> LOAD team from file");
         System.out.println("\tQ -> Quit");
     }
