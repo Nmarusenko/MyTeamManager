@@ -120,6 +120,10 @@ public class Team implements Writable {
         return display;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
