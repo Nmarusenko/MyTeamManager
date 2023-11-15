@@ -1,5 +1,6 @@
 package ui;
 
+import model.Player;
 import model.Team;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -34,7 +35,8 @@ public class TeamManagerGUI extends JFrame {
         team = new Team("MyTeamName");
         desktop = new JDesktopPane();
         desktop.addMouseListener(new DesktopFocusAction());
-        controlPanel = new JInternalFrame("Control Panel", false, false, false, false);
+        controlPanel = new JInternalFrame("Control Panel",
+                false, false, false, false);
         controlPanel.setLayout(new BorderLayout());
 
         setContentPane(desktop);
@@ -42,9 +44,8 @@ public class TeamManagerGUI extends JFrame {
         setSize(WIDTH, HEIGHT);
 
         addButtonPanel();
-        //addMenu();
         //addKeyPad();
-        //addAlarmDisplayPanel();
+        addTeamNameDisplayPanel();
 
         //Remote r = new Remote(team);
         //addRemote(r);
@@ -102,7 +103,14 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            // do smth
+            // Find way to get user input
+            Player player = new Player("Default name", 0);
+            Boolean bool = team.addPlayer(player);
+            if (!bool) {
+                JOptionPane.showMessageDialog(null,
+                        "Player number currently in use", "System Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
@@ -114,7 +122,21 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            // do smth
+            String name = "Default"; // edit for user input
+            int number = 0; // edit for use input
+            Double rating = 1.3;
+            Player player = team.findPlayer(name, number);
+            if (player == null) {
+                JOptionPane.showMessageDialog(null, "Player does not exist", "System Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+            Boolean bool = player.addRating(rating);
+            if (!bool) {
+                JOptionPane.showMessageDialog(null,
+                        "Rating not in range [0, 10]", "System Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
         }
     }
 
@@ -126,7 +148,14 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            // do smth
+            String name = "Default"; // edit for user input
+            int number = 0; // edit for use input
+            Boolean bool = team.removePlayer(name, number);
+            if (!bool) {
+                JOptionPane.showMessageDialog(null,
+                        "Unable to remove player - check name and number again", "System Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
@@ -259,6 +288,12 @@ public class TeamManagerGUI extends JFrame {
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
+    }
+
+    private void addTeamNameDisplayPanel() {
+        NameDisplayUI alarmUI = new NameDisplayUI(team.getName());
+        //team.addAlarmObserver(alarmUI);
+        controlPanel.add(alarmUI, BorderLayout.NORTH);
     }
 
 }
