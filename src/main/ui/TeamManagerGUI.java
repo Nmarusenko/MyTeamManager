@@ -7,6 +7,8 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -102,7 +104,7 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            List<String> nameAndNumber = useDoublePanel();
+            List<String> nameAndNumber = useDoublePanelPlayers("Enter Player Name and Number");
             String name = nameAndNumber.get(0);
             Integer num = Integer.valueOf(nameAndNumber.get(1));
             Player player = new Player(name, num);
@@ -111,6 +113,11 @@ public class TeamManagerGUI extends JFrame {
                 JOptionPane.showMessageDialog(null,
                         "Player number currently in use", "System Error",
                         JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        player.getName() + ", " + player.getJerseyNum() + " - added successfully to "
+                                + team.getName(), "Success",
+                        JOptionPane.PLAIN_MESSAGE);
             }
         }
     }
@@ -123,14 +130,16 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            String name = "Default"; // edit for user input
-            int number = 0; // edit for use input
-            Double rating = 1.3;
+            List<String> nameAndNumber = useDoublePanelPlayers("Find player by Name and Number");
+            String name = nameAndNumber.get(0);
+            Integer number = Integer.valueOf(nameAndNumber.get(1));
             Player player = team.findPlayer(name, number);
             if (player == null) {
                 JOptionPane.showMessageDialog(null, "Player does not exist", "System Error",
                         JOptionPane.ERROR_MESSAGE);
             } else {
+                Double rating = Double.valueOf(JOptionPane.showInputDialog("Give " + player.getName()
+                        + " a rating between [1, 10]"));
                 Boolean bool = player.addRating(rating);
                 if (!bool) {
                     JOptionPane.showMessageDialog(null,
@@ -149,13 +158,18 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            String name = "Default"; // edit for user input
-            int number = 0; // edit for use input
+            List<String> nameAndNumber = useDoublePanelPlayers("Find player by Name and Number");
+            String name = nameAndNumber.get(0);
+            Integer number = Integer.valueOf(nameAndNumber.get(1));
             Boolean bool = team.removePlayer(name, number);
             if (!bool) {
                 JOptionPane.showMessageDialog(null,
                         "Unable to find player with name and number", "System Error",
                         JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Successfully removed " + name + " from " + team.getName(), "Success",
+                        JOptionPane.PLAIN_MESSAGE);
             }
         }
     }
@@ -169,7 +183,9 @@ public class TeamManagerGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
             List<String> players = team.viewAllPlayers();
-            // display the players
+            String display = displayPlayers(players);
+            JOptionPane.showInternalMessageDialog(null, display,
+                    "Showing all Players", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -181,8 +197,9 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            String name = "Default"; // edit for user input
-            int number = 0; // edit for use input
+            List<String> nameAndNumber = useDoublePanelPlayers("Find player by Name and Number");
+            String name = nameAndNumber.get(0);
+            Integer number = Integer.valueOf(nameAndNumber.get(1));
             Player player = team.findPlayer(name, number);
             if (player == null) {
                 JOptionPane.showMessageDialog(null,
@@ -190,7 +207,8 @@ public class TeamManagerGUI extends JFrame {
                         JOptionPane.ERROR_MESSAGE);
             } else {
                 Double num = player.averageRating();
-                // somehow show num to user
+                JOptionPane.showInternalMessageDialog(null, "Average rating",
+                        name + " has an average game rating of " + num, JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
@@ -203,8 +221,9 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            String name = "Default"; // edit for user input
-            int number = 0; // edit for use input
+            List<String> nameAndNumber = useDoublePanelPlayers("Find player by Name and Number");
+            String name = nameAndNumber.get(0);
+            Integer number = Integer.valueOf(nameAndNumber.get(1));
             Player player = team.findPlayer(name, number);
             if (player == null) {
                 JOptionPane.showMessageDialog(null,
@@ -212,7 +231,8 @@ public class TeamManagerGUI extends JFrame {
                         JOptionPane.ERROR_MESSAGE);
             } else {
                 int num = player.getGoals();
-                // display num to user
+                JOptionPane.showInternalMessageDialog(null, "Total Goals",
+                        name + " has " + num + " goals", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
@@ -225,15 +245,18 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            String awayName = "away";
-            int awayGoals = 0;
-            List<Integer> homeScorers = new ArrayList<>();
+            List gameInfo = useDoublePanelGames();
+            String awayName = (String) gameInfo.get(0);
+            Integer awayGoals = Integer.valueOf((String) gameInfo.get(1));
+            List<Integer> homeScorers = (List<Integer>) gameInfo.get(2);
 
             Game game = new Game(team.getName(), awayName);
             game.setHomeGoals(homeScorers);
             game.setAwayTeamGoals(awayGoals);
-
             team.addGame(game);
+            JOptionPane.showMessageDialog(null,
+                    "Successfully added the game: " + game.displayGame(), "Success",
+                    JOptionPane.PLAIN_MESSAGE);
         }
     }
 
@@ -245,8 +268,10 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            List<String> display = team.displayGames();
-            // Show display to the user
+            List<String> games = team.displayGames();
+            String display = displayGames(games);
+            JOptionPane.showInternalMessageDialog(null, display,
+                    "Showing all Games", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -273,7 +298,8 @@ public class TeamManagerGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
             int points = team.getPoints();
-            // display points
+            JOptionPane.showInternalMessageDialog(null, "+3 points for win, +1 for tie, +0 for loss",
+                    team.getName() + "has " + points + " from their games", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -285,7 +311,12 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            saveTeam();
+            int num = JOptionPane.showConfirmDialog(null,
+                    "Are you sure you want to Save To File?", "Save to File", JOptionPane.YES_NO_OPTION);
+            System.out.println(num);
+            if (num == 0) {
+                saveTeam();
+            }
         }
     }
 
@@ -297,7 +328,11 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            loadTeam();
+            int num = JOptionPane.showConfirmDialog(null,
+                    "Are you sure you want to Load From File?", "Save to File", JOptionPane.YES_NO_OPTION);
+            if (num == 0) {
+                loadTeam();
+            }
         }
     }
 
@@ -307,8 +342,6 @@ public class TeamManagerGUI extends JFrame {
             jsonWriter.open();
             jsonWriter.write(team);
             jsonWriter.close();
-            // System.out.println("Saved " + team.getName() + " to " + JSON_STORE);
-            // Show that everything went well?
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null,
                     "Unable to write to file: " + JSON_STORE, "System Error",
@@ -321,8 +354,6 @@ public class TeamManagerGUI extends JFrame {
     private void loadTeam() {
         try {
             team = jsonReader.read();
-            // System.out.println("Loaded " + team.getName() + " from " + JSON_STORE);
-            // maybe display success?
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null,
                     "Unable to read from file: " + JSON_STORE, "System Error",
@@ -336,21 +367,64 @@ public class TeamManagerGUI extends JFrame {
     }
 
     // Code inspired from online to make a double input panel
-    public List<String> useDoublePanel() {
+    public List<String> useDoublePanelPlayers(String message) {
         JTextField fieldX = new JTextField(5);
         JTextField fieldY = new JTextField(5);
         JPanel doublePanel = new JPanel();
         doublePanel.add(new JLabel("Player Name: "));
         doublePanel.add(fieldX);
         doublePanel.add(Box.createHorizontalStrut(15));
-        doublePanel.add(new JLabel("PlayerNumber: "));
+        doublePanel.add(new JLabel("Player Number: "));
         doublePanel.add(fieldY);
         List<String> ret = new ArrayList<String>();
         JOptionPane.showConfirmDialog(null, doublePanel,
-                "Please Enter Player Name and Number", JOptionPane.OK_CANCEL_OPTION);
+                message, JOptionPane.OK_CANCEL_OPTION);
         ret.add(fieldX.getText());
         ret.add(fieldY.getText());
         return ret;
+    }
+
+    public List useDoublePanelGames() {
+        String message = "Enter away team name and goals scored";
+        JTextField fieldX = new JTextField(5);
+        JTextField fieldY = new JTextField(5);
+        JPanel doublePanel = new JPanel();
+        doublePanel.add(new JLabel("Away Team Name: "));
+        doublePanel.add(fieldX);
+        doublePanel.add(Box.createHorizontalStrut(15));
+        doublePanel.add(new JLabel("Away Team Goals: "));
+        doublePanel.add(fieldY);
+        List ret = new ArrayList();
+        JOptionPane.showConfirmDialog(null, doublePanel,
+                message, JOptionPane.OK_CANCEL_OPTION);
+        ret.add(fieldX.getText());
+        ret.add(fieldY.getText());
+        List<Integer> scorers = getHomeScorers();
+        ret.add(scorers);
+        return ret;
+    }
+
+    public List<Integer> getHomeScorers() {
+        // find a way to collect a list of integers (jersey numbers) who have scored
+        List<Integer> scorers = new ArrayList<Integer>();
+        return scorers;
+    }
+
+
+    public String displayPlayers(List<String> names) {
+        String display = "";
+        for (String s : names) {
+            display = display + s + "\n";
+        }
+        return display;
+    }
+
+    public String displayGames(List<String> games) {
+        String display = "";
+        for (String g : games) {
+            display = display + g + "\n";
+        }
+        return display;
     }
 
 }
