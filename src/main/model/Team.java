@@ -120,6 +120,28 @@ public class Team implements Writable {
         return display;
     }
 
+
+    // Document code and also test
+    public List<String> filterByMinRating(Double num) {
+        List<String> ret = new ArrayList<String>();
+        for (Player p : players) {
+            if (p.averageRating() >= num) {
+                ret.add(p.getName() + ", " + p.getJerseyNum() + " - Rating: " + p.averageRating());
+            }
+        }
+        return ret;
+    }
+
+    public List<String> filterByMinGoals(Integer num) {
+        List<String> ret = new ArrayList<String>();
+        for (Player p : players) {
+            if (p.getGoals() >= num) {
+                ret.add(p.getName() + ", " + p.getJerseyNum() + " - " + p.getGoals() + " goals");
+            }
+        }
+        return ret;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -149,6 +171,7 @@ public class Team implements Writable {
         json.put("games", gamesToJson());
         return json;
     }
+
 
     // EFFECTS: returns the players in this team into a JSON array
     private JSONArray playersToJson() {

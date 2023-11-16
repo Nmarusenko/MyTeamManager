@@ -80,8 +80,11 @@ public class TeamManagerGUI extends JFrame {
         buttonPanel.add(new JButton(new ViewGamesAction()));
         buttonPanel.add(new JButton(new SetTeamNameAction()));
         buttonPanel.add(new JButton(new CalculateTeamPointsAction()));
+        buttonPanel.add(new JButton(new FilterByRatingAction()));
+        buttonPanel.add(new JButton(new FilterByGoalsAction()));
         buttonPanel.add(new JButton(new SaveToFileAction()));
         buttonPanel.add(new JButton(new LoadFromFileAction()));
+
 
         controlPanel.add(buttonPanel, BorderLayout.WEST);
     }
@@ -183,7 +186,7 @@ public class TeamManagerGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
             List<String> players = team.viewAllPlayers();
-            String display = displayPlayers(players);
+            String display = display(players);
             JOptionPane.showInternalMessageDialog(null, display,
                     "Showing all Players", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -269,7 +272,7 @@ public class TeamManagerGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
             List<String> games = team.displayGames();
-            String display = displayGames(games);
+            String display = display(games);
             JOptionPane.showInternalMessageDialog(null, display,
                     "Showing all Games", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -333,6 +336,41 @@ public class TeamManagerGUI extends JFrame {
             if (num == 0) {
                 loadTeam();
             }
+        }
+    }
+
+
+    private class FilterByRatingAction extends AbstractAction {
+
+        FilterByRatingAction() {
+            super("Filter by min Average Rating");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            Double minRating = Double.valueOf(
+                    JOptionPane.showInputDialog("What is the minimum rating you would like to filter by?"));
+            List<String> names = team.filterByMinRating(minRating);
+            String display = display(names);
+            JOptionPane.showInternalMessageDialog(null, display,
+                    "All players with min rating of " + minRating, JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private class FilterByGoalsAction extends AbstractAction {
+
+        FilterByGoalsAction() {
+            super("Filter by min goals scored");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent evt) {
+            Integer minGoals = Integer.valueOf(
+                    JOptionPane.showInputDialog("What is the minimum number of goals you would like to filter by?"));
+            List<String> names = team.filterByMinGoals(minGoals);
+            String display = display(names);
+            JOptionPane.showInternalMessageDialog(null, display,
+                    "All players with min " + minGoals + " goals", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -411,7 +449,7 @@ public class TeamManagerGUI extends JFrame {
     }
 
 
-    public String displayPlayers(List<String> names) {
+    public String display(List<String> names) {
         String display = "";
         for (String s : names) {
             display = display + s + "\n";
@@ -419,12 +457,5 @@ public class TeamManagerGUI extends JFrame {
         return display;
     }
 
-    public String displayGames(List<String> games) {
-        String display = "";
-        for (String g : games) {
-            display = display + g + "\n";
-        }
-        return display;
-    }
 
 }
