@@ -1,5 +1,16 @@
 {
-    "players": [],
+    "players": [
+        {
+            "player name": "Noah",
+            "player number": 8,
+            "player ratings": []
+        },
+        {
+            "player name": "Kohen",
+            "player number": 10,
+            "player ratings": []
+        }
+    ],
     "name": "MyTeamName",
     "games": []
 }

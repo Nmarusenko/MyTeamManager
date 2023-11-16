@@ -25,7 +25,6 @@ public class TeamManagerGUI extends JFrame {
     private static final String FILE_DESCRIPTOR = "...file";
     private static final String SCREEN_DESCRIPTOR = "...screen";
     private Team team;
-    private JComboBox<String> printCombo;
     private JDesktopPane desktop;
     private JInternalFrame controlPanel;
     private NameDisplayUI nameDisplayUI;
@@ -48,11 +47,7 @@ public class TeamManagerGUI extends JFrame {
         setSize(WIDTH, HEIGHT);
 
         addButtonPanel();
-        //addKeyPad();
         addTeamNameDisplayPanel();
-
-        //Remote r = new Remote(team);
-        //addRemote(r);
 
         controlPanel.pack();
         controlPanel.setVisible(true);
@@ -107,8 +102,10 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            // Find way to get user input
-            Player player = new Player("Default name", 0);
+            List<String> nameAndNumber = useDoublePanel();
+            String name = nameAndNumber.get(0);
+            Integer num = Integer.valueOf(nameAndNumber.get(1));
+            Player player = new Player(name, num);
             Boolean bool = team.addPlayer(player);
             if (!bool) {
                 JOptionPane.showMessageDialog(null,
@@ -261,7 +258,7 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            String name = "Get from user";
+            String name = JOptionPane.showInputDialog("What is your new team name?");
             team.setName(name);
             nameDisplayUI.update(name);
         }
@@ -336,6 +333,24 @@ public class TeamManagerGUI extends JFrame {
     private void addTeamNameDisplayPanel() {
         nameDisplayUI = new NameDisplayUI(team.getName());
         controlPanel.add(nameDisplayUI, BorderLayout.NORTH);
+    }
+
+    // Code inspired from online to make a double input panel
+    public List<String> useDoublePanel() {
+        JTextField fieldX = new JTextField(5);
+        JTextField fieldY = new JTextField(5);
+        JPanel doublePanel = new JPanel();
+        doublePanel.add(new JLabel("Player Name: "));
+        doublePanel.add(fieldX);
+        doublePanel.add(Box.createHorizontalStrut(15));
+        doublePanel.add(new JLabel("PlayerNumber: "));
+        doublePanel.add(fieldY);
+        List<String> ret = new ArrayList<String>();
+        JOptionPane.showConfirmDialog(null, doublePanel,
+                "Please Enter Player Name and Number", JOptionPane.OK_CANCEL_OPTION);
+        ret.add(fieldX.getText());
+        ret.add(fieldY.getText());
+        return ret;
     }
 
 }
