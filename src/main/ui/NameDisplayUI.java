@@ -28,5 +28,10 @@ public class NameDisplayUI extends JPanel {
         g.drawString("Team Name: " + displayString, 20, 20);
     }
 
+    public void update(String name) {
+        displayString = name;
+        repaint();
+    }
+
 }
 

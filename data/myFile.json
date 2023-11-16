@@ -1,14 +1,5 @@
 {
-    "players": [{
-        "player name": "Noah",
-        "player number": 10,
-        "player ratings": []
-    }],
-    "name": "rangers",
-    "games": [{
-        "away team": "Madrid",
-        "away team goals": 2,
-        "home team": "rangers",
-        "home goal scorers": [10]
-    }]
+    "players": [],
+    "name": "MyTeamName",
+    "games": []
 }

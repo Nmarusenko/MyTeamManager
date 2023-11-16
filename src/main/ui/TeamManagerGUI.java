@@ -1,5 +1,6 @@
 package ui;
 
+import model.Game;
 import model.Player;
 import model.Team;
 import persistence.JsonReader;
@@ -12,6 +13,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TeamManagerGUI extends JFrame {
     private static final String JSON_STORE = "./data/myFile.json";
@@ -25,6 +28,7 @@ public class TeamManagerGUI extends JFrame {
     private JComboBox<String> printCombo;
     private JDesktopPane desktop;
     private JInternalFrame controlPanel;
+    private NameDisplayUI nameDisplayUI;
 
 
 
@@ -129,14 +133,14 @@ public class TeamManagerGUI extends JFrame {
             if (player == null) {
                 JOptionPane.showMessageDialog(null, "Player does not exist", "System Error",
                         JOptionPane.ERROR_MESSAGE);
+            } else {
+                Boolean bool = player.addRating(rating);
+                if (!bool) {
+                    JOptionPane.showMessageDialog(null,
+                            "Rating not in range [0, 10]", "System Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
-            Boolean bool = player.addRating(rating);
-            if (!bool) {
-                JOptionPane.showMessageDialog(null,
-                        "Rating not in range [0, 10]", "System Error",
-                        JOptionPane.ERROR_MESSAGE);
-            }
-
         }
     }
 
@@ -153,7 +157,7 @@ public class TeamManagerGUI extends JFrame {
             Boolean bool = team.removePlayer(name, number);
             if (!bool) {
                 JOptionPane.showMessageDialog(null,
-                        "Unable to remove player - check name and number again", "System Error",
+                        "Unable to find player with name and number", "System Error",
                         JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -167,7 +171,8 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            // do smth
+            List<String> players = team.viewAllPlayers();
+            // display the players
         }
     }
 
@@ -179,7 +184,17 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            // do smth
+            String name = "Default"; // edit for user input
+            int number = 0; // edit for use input
+            Player player = team.findPlayer(name, number);
+            if (player == null) {
+                JOptionPane.showMessageDialog(null,
+                        "Unable to find player with name and number", "System Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                Double num = player.averageRating();
+                // somehow show num to user
+            }
         }
     }
 
@@ -191,7 +206,17 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            // do smth
+            String name = "Default"; // edit for user input
+            int number = 0; // edit for use input
+            Player player = team.findPlayer(name, number);
+            if (player == null) {
+                JOptionPane.showMessageDialog(null,
+                        "Unable to find player with name and number", "System Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                int num = player.getGoals();
+                // display num to user
+            }
         }
     }
 
@@ -203,7 +228,15 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            // do smth
+            String awayName = "away";
+            int awayGoals = 0;
+            List<Integer> homeScorers = new ArrayList<>();
+
+            Game game = new Game(team.getName(), awayName);
+            game.setHomeGoals(homeScorers);
+            game.setAwayTeamGoals(awayGoals);
+
+            team.addGame(game);
         }
     }
 
@@ -215,7 +248,8 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            // do smth
+            List<String> display = team.displayGames();
+            // Show display to the user
         }
     }
 
@@ -227,7 +261,9 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            // do smth
+            String name = "Get from user";
+            team.setName(name);
+            nameDisplayUI.update(name);
         }
     }
 
@@ -239,7 +275,8 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            // do smth
+            int points = team.getPoints();
+            // display points
         }
     }
 
@@ -251,7 +288,7 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            // do smth
+            saveTeam();
         }
     }
 
@@ -263,7 +300,7 @@ public class TeamManagerGUI extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent evt) {
-            // do smth
+            loadTeam();
         }
     }
 
@@ -273,9 +310,12 @@ public class TeamManagerGUI extends JFrame {
             jsonWriter.open();
             jsonWriter.write(team);
             jsonWriter.close();
-            System.out.println("Saved " + team.getName() + " to " + JSON_STORE);
+            // System.out.println("Saved " + team.getName() + " to " + JSON_STORE);
+            // Show that everything went well?
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file: " + JSON_STORE);
+            JOptionPane.showMessageDialog(null,
+                    "Unable to write to file: " + JSON_STORE, "System Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -284,16 +324,18 @@ public class TeamManagerGUI extends JFrame {
     private void loadTeam() {
         try {
             team = jsonReader.read();
-            System.out.println("Loaded " + team.getName() + " from " + JSON_STORE);
+            // System.out.println("Loaded " + team.getName() + " from " + JSON_STORE);
+            // maybe display success?
         } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
+            JOptionPane.showMessageDialog(null,
+                    "Unable to read from file: " + JSON_STORE, "System Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void addTeamNameDisplayPanel() {
-        NameDisplayUI alarmUI = new NameDisplayUI(team.getName());
-        //team.addAlarmObserver(alarmUI);
-        controlPanel.add(alarmUI, BorderLayout.NORTH);
+        nameDisplayUI = new NameDisplayUI(team.getName());
+        controlPanel.add(nameDisplayUI, BorderLayout.NORTH);
     }
 
 }
