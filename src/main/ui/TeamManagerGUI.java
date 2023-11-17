@@ -7,8 +7,6 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -24,8 +22,6 @@ public class TeamManagerGUI extends JFrame {
     private JsonReader jsonReader;
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
-    private static final String FILE_DESCRIPTOR = "...file";
-    private static final String SCREEN_DESCRIPTOR = "...screen";
     private Team team;
     private JDesktopPane desktop;
     private JInternalFrame controlPanel;
@@ -210,8 +206,8 @@ public class TeamManagerGUI extends JFrame {
                         JOptionPane.ERROR_MESSAGE);
             } else {
                 Double num = player.averageRating();
-                JOptionPane.showInternalMessageDialog(null, "Average rating",
-                        name + " has an average game rating of " + num, JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showInternalMessageDialog(null, name + " has an average game rating of " + num,
+                        "Average Rating", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
@@ -301,8 +297,9 @@ public class TeamManagerGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
             int points = team.getPoints();
-            JOptionPane.showInternalMessageDialog(null, "+3 points for win, +1 for tie, +0 for loss",
-                    team.getName() + "has " + points + " from their games", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showInternalMessageDialog(null,team.getName() + "has "
+                            + points + " from their games",
+                    "+3 points for win, +1 for tie, +0 for loss", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
@@ -335,6 +332,7 @@ public class TeamManagerGUI extends JFrame {
                     "Are you sure you want to Load From File?", "Save to File", JOptionPane.YES_NO_OPTION);
             if (num == 0) {
                 loadTeam();
+                nameDisplayUI.update(team.getName());
             }
         }
     }
@@ -443,8 +441,14 @@ public class TeamManagerGUI extends JFrame {
     }
 
     public List<Integer> getHomeScorers() {
-        // find a way to collect a list of integers (jersey numbers) who have scored
         List<Integer> scorers = new ArrayList<Integer>();
+        Integer goals = Integer.valueOf(
+                JOptionPane.showInputDialog("How many goals did " + team.getName() + " score?"));
+        for (int i = 0; i < goals; i++) {
+            Integer scorer = Integer.valueOf(
+                    JOptionPane.showInputDialog("Who (jersey number) scored goal #" + (i + 1) + "?"));
+            scorers.add(scorer);
+        }
         return scorers;
     }
 
