@@ -243,4 +243,10 @@ public class TeamTest {
         assertEquals(names, testTeam2.filterByMinRating(5.0));
     }
 
+    @Test
+    void testSetName() {
+        testTeam.setName("NewName");
+        assertEquals("NewName", testTeam.getName());
+    }
+
 }
