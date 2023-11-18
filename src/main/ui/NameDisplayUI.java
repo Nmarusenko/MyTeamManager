@@ -6,7 +6,6 @@ import java.awt.*;
 public class NameDisplayUI extends JPanel {
     private static final int WIDTH = 100;
     private static final int HEIGHT = 30;
-    private static final int TEXT_INDENT = 30;
     private String displayString;
     private Color fillColor;
 

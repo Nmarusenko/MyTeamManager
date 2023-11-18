@@ -230,8 +230,8 @@ public class TeamManagerGUI extends JFrame {
                         JOptionPane.ERROR_MESSAGE);
             } else {
                 int num = player.getGoals();
-                JOptionPane.showInternalMessageDialog(null, "Total Goals",
-                        name + " has " + num + " goals", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showInternalMessageDialog(null, name + " has " + num + " goals",
+                        "Total Goals", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
@@ -297,8 +297,8 @@ public class TeamManagerGUI extends JFrame {
         @Override
         public void actionPerformed(ActionEvent evt) {
             int points = team.getPoints();
-            JOptionPane.showInternalMessageDialog(null,team.getName() + "has "
-                            + points + " from their games",
+            JOptionPane.showInternalMessageDialog(null,team.getName() + " has "
+                            + points + " points from their games",
                     "+3 points for win, +1 for tie, +0 for loss", JOptionPane.INFORMATION_MESSAGE);
         }
     }
