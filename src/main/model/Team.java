@@ -121,7 +121,7 @@ public class Team implements Writable {
     }
 
 
-    // Document code and also test
+    // EFFECTS: filters the players that have num rating or higher and transforms into a string
     public List<String> filterByMinRating(Double num) {
         List<String> ret = new ArrayList<String>();
         for (Player p : players) {
@@ -132,6 +132,7 @@ public class Team implements Writable {
         return ret;
     }
 
+    // EFFECTS: filters the players that have num goals or more and transforms into a string
     public List<String> filterByMinGoals(Integer num) {
         List<String> ret = new ArrayList<String>();
         for (Player p : players) {

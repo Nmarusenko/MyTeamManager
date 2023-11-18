@@ -203,4 +203,44 @@ public class TeamTest {
         assertEquals(p1, testTeam2.findPlayer("Noah", 10));
     }
 
+    @Test
+    void filterGoalsMultiple() {
+        Game game1 = new Game("Rangers", "Away1"); // 4-1 Win
+        Game game2 = new Game("Rangers", "Away2"); // 1-2 loss
+        Game game3 = new Game("Rangers", "Away3"); // 1-1 Tie
+        game1.setAwayTeamGoals(1);
+        List<Integer> list1 = new ArrayList<Integer>();
+        list1.add(10);
+        list1.add(9);
+        list1.add(10);
+        list1.add(17);
+        game1.setHomeGoals(list1);
+        game2.setAwayTeamGoals(2);
+        List<Integer> list2 = new ArrayList<Integer>();
+        list2.add(10);
+        game2.setHomeGoals(list2);
+        game3.setAwayTeamGoals(1);
+        List<Integer> list3 = new ArrayList<Integer>();
+        list3.add(17);
+        game3.setHomeGoals(list3);
+        testTeam2.addGame(game1);
+        testTeam2.addGame(game2);
+        testTeam2.addGame(game3);
+        List<String> stringList = new ArrayList<>();
+        stringList.add("Noah, 10 - 3 goals");
+        stringList.add("Kevin, 17 - 2 goals");
+        assertEquals(stringList, testTeam2.filterByMinGoals(2));
+    }
+
+    @Test
+    void filterByRatingMultiple() {
+        p1.addRating(1.3);
+        p2.addRating(5.0);
+        p3.addRating(7.0);
+        List<String> names = new ArrayList<>();
+        names.add("Ronaldo, 7 - Rating: 5.0");
+        names.add("Kevin, 17 - Rating: 7.0");
+        assertEquals(names, testTeam2.filterByMinRating(5.0));
+    }
+
 }

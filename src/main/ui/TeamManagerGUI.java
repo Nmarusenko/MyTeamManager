@@ -16,6 +16,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// Represents the Team Manager App. The Team Manager App will allow the user to
+// construct a team for themselves and add as many players and games as they want
+// to their team. This is the GUI for the app
 public class TeamManagerGUI extends JFrame {
     private static final String JSON_STORE = "./data/myFile.json";
     private JsonWriter jsonWriter;
@@ -32,6 +36,7 @@ public class TeamManagerGUI extends JFrame {
 
 
 
+    //EFFECTS: runs the team manager
     public TeamManagerGUI() {
         buttonPanel = new JPanel();
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -60,12 +65,14 @@ public class TeamManagerGUI extends JFrame {
     }
 
 
+    // EFFECTS: Centers the panel on theh screen
     private void centreOnScreen() {
         int width = Toolkit.getDefaultToolkit().getScreenSize().width;
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
         setLocation((width - getWidth()) / 2, (height - getHeight()) / 2);
     }
 
+    // EFFECTS: Adds all the buttons to the panel
     private void addButtonPanel() {
         buttonPanel.setLayout(new GridLayout(4,3));
         buttonPanel.add(new JButton(new AddPlayerAction()));
@@ -90,14 +97,16 @@ public class TeamManagerGUI extends JFrame {
 
 
 
-
+    // Sets up the mouse
     private class DesktopFocusAction extends MouseAdapter {
         @Override
+        //EFFECTS: makes the mouse click work
         public void mouseClicked(MouseEvent e) {
             TeamManagerGUI.this.requestFocusInWindow();
         }
     }
 
+    // Sets up the action for adding a player
     private class AddPlayerAction extends AbstractAction {
 
         AddPlayerAction() {
@@ -105,6 +114,7 @@ public class TeamManagerGUI extends JFrame {
         }
 
         @Override
+        // EFFECTS: Action performed when adding a player
         public void actionPerformed(ActionEvent evt) {
             List<String> nameAndNumber = useDoublePanelPlayers("Enter Player Name and Number");
             String name = nameAndNumber.get(0);
@@ -124,6 +134,7 @@ public class TeamManagerGUI extends JFrame {
         }
     }
 
+    // Sets up the action for adding a game rating
     private class AddGameRatingAction extends AbstractAction {
 
         AddGameRatingAction() {
@@ -131,6 +142,7 @@ public class TeamManagerGUI extends JFrame {
         }
 
         @Override
+        // EFFECTS: Action performed when adding a game rating
         public void actionPerformed(ActionEvent evt) {
             List<String> nameAndNumber = useDoublePanelPlayers("Find player by Name and Number");
             String name = nameAndNumber.get(0);
@@ -152,6 +164,7 @@ public class TeamManagerGUI extends JFrame {
         }
     }
 
+    // Sets up the action for removing a player
     private class RemovePlayerAction extends AbstractAction {
 
         RemovePlayerAction() {
@@ -159,6 +172,7 @@ public class TeamManagerGUI extends JFrame {
         }
 
         @Override
+        // EFFECTS: Action performed when removing a player
         public void actionPerformed(ActionEvent evt) {
             List<String> nameAndNumber = useDoublePanelPlayers("Find player by Name and Number");
             String name = nameAndNumber.get(0);
@@ -176,6 +190,7 @@ public class TeamManagerGUI extends JFrame {
         }
     }
 
+    // Sets up the action for viewing players
     private class ViewPlayersAction extends AbstractAction {
 
         ViewPlayersAction() {
@@ -183,6 +198,7 @@ public class TeamManagerGUI extends JFrame {
         }
 
         @Override
+        // EFFECTS: Action performed when viewing all players
         public void actionPerformed(ActionEvent evt) {
             List<String> players = team.viewAllPlayers();
             String display = display(players);
@@ -191,6 +207,7 @@ public class TeamManagerGUI extends JFrame {
         }
     }
 
+    // Sets up the action for finding the average rating of a player
     private class AverageRatingAction extends AbstractAction {
 
         AverageRatingAction() {
@@ -198,6 +215,7 @@ public class TeamManagerGUI extends JFrame {
         }
 
         @Override
+        // EFFECTS: Action performed when finding average rating of a player
         public void actionPerformed(ActionEvent evt) {
             List<String> nameAndNumber = useDoublePanelPlayers("Find player by Name and Number");
             String name = nameAndNumber.get(0);
@@ -215,6 +233,7 @@ public class TeamManagerGUI extends JFrame {
         }
     }
 
+    // Sets up the action for finding the goals scored of a player
     private class GoalsScoredAction extends AbstractAction {
 
         GoalsScoredAction() {
@@ -222,6 +241,7 @@ public class TeamManagerGUI extends JFrame {
         }
 
         @Override
+        // EFFECTS: Action performed when finding goals scored of a player
         public void actionPerformed(ActionEvent evt) {
             List<String> nameAndNumber = useDoublePanelPlayers("Find player by Name and Number");
             String name = nameAndNumber.get(0);
@@ -239,6 +259,7 @@ public class TeamManagerGUI extends JFrame {
         }
     }
 
+    // Sets up the action for creating a game
     private class CreateGameAction extends AbstractAction {
 
         CreateGameAction() {
@@ -246,6 +267,7 @@ public class TeamManagerGUI extends JFrame {
         }
 
         @Override
+        // EFFECTS: Action performed to create a game
         public void actionPerformed(ActionEvent evt) {
             List gameInfo = useDoublePanelGames();
             String awayName = (String) gameInfo.get(0);
@@ -262,6 +284,7 @@ public class TeamManagerGUI extends JFrame {
         }
     }
 
+    // Sets up the action for viewing all games
     private class ViewGamesAction extends AbstractAction {
 
         ViewGamesAction() {
@@ -269,6 +292,7 @@ public class TeamManagerGUI extends JFrame {
         }
 
         @Override
+        // EFFECTS: Action performed when viewing all games
         public void actionPerformed(ActionEvent evt) {
             List<String> games = team.displayGames();
             String display = display(games);
@@ -277,6 +301,8 @@ public class TeamManagerGUI extends JFrame {
         }
     }
 
+
+    // Sets up the action for changing the team name
     private class SetTeamNameAction extends AbstractAction {
 
         SetTeamNameAction() {
@@ -284,6 +310,7 @@ public class TeamManagerGUI extends JFrame {
         }
 
         @Override
+        // EFFECTS: Action performed when setting a new team name
         public void actionPerformed(ActionEvent evt) {
             String name = JOptionPane.showInputDialog("What is your new team name?");
             team.setName(name);
@@ -291,6 +318,7 @@ public class TeamManagerGUI extends JFrame {
         }
     }
 
+    // Sets up the action for calculating the teams points
     private class CalculateTeamPointsAction extends AbstractAction {
 
         CalculateTeamPointsAction() {
@@ -298,6 +326,7 @@ public class TeamManagerGUI extends JFrame {
         }
 
         @Override
+        // EFFECTS: Action performed when calculating a teams points
         public void actionPerformed(ActionEvent evt) {
             int points = team.getPoints();
             JOptionPane.showInternalMessageDialog(null,team.getName() + " has "
@@ -306,6 +335,7 @@ public class TeamManagerGUI extends JFrame {
         }
     }
 
+    // Sets up the action for saving to file
     private class SaveToFileAction extends AbstractAction {
 
         SaveToFileAction() {
@@ -313,6 +343,7 @@ public class TeamManagerGUI extends JFrame {
         }
 
         @Override
+        // EFFECTS: Action performed when saving state to file
         public void actionPerformed(ActionEvent evt) {
             int num = JOptionPane.showConfirmDialog(null,
                     "Are you sure you want to Save To File?", "Save to File", JOptionPane.YES_NO_OPTION);
@@ -323,6 +354,7 @@ public class TeamManagerGUI extends JFrame {
         }
     }
 
+    // Sets up the action for loading from file
     private class LoadFromFileAction extends AbstractAction {
 
         LoadFromFileAction() {
@@ -330,6 +362,7 @@ public class TeamManagerGUI extends JFrame {
         }
 
         @Override
+        // EFFECTS: Action performed when loading a new state from file
         public void actionPerformed(ActionEvent evt) {
             int num = JOptionPane.showConfirmDialog(null,
                     "Are you sure you want to Load From File?", "Save to File", JOptionPane.YES_NO_OPTION);
@@ -341,6 +374,7 @@ public class TeamManagerGUI extends JFrame {
     }
 
 
+    // Sets up the action for filtering all players by a certain rating
     private class FilterByRatingAction extends AbstractAction {
 
         FilterByRatingAction() {
@@ -348,6 +382,7 @@ public class TeamManagerGUI extends JFrame {
         }
 
         @Override
+        // EFFECTS: Action performed when filtering players by a min rating
         public void actionPerformed(ActionEvent evt) {
             Double minRating = Double.valueOf(
                     JOptionPane.showInputDialog("What is the minimum rating you would like to filter by?"));
@@ -358,6 +393,7 @@ public class TeamManagerGUI extends JFrame {
         }
     }
 
+    // Sets up the action for filtering a list of players by number of goals scored
     private class FilterByGoalsAction extends AbstractAction {
 
         FilterByGoalsAction() {
@@ -365,6 +401,7 @@ public class TeamManagerGUI extends JFrame {
         }
 
         @Override
+        // EFFECTS: Action performed when filtering players by a min number of goals
         public void actionPerformed(ActionEvent evt) {
             Integer minGoals = Integer.valueOf(
                     JOptionPane.showInputDialog("What is the minimum number of goals you would like to filter by?"));
@@ -400,17 +437,20 @@ public class TeamManagerGUI extends JFrame {
         }
     }
 
+    // EFFECTS: Adds the team name at the top of the screen and the logo at the bottom
     private void addTeamNameAndLogo() {
         nameDisplayUI = new NameDisplayUI(team.getName());
         controlPanel.add(nameDisplayUI, BorderLayout.NORTH);
-        //ImageIcon logo = new ImageIcon(new ImageIcon("data/logo.png").getImage().getScaledInstance(270, 200, Image.SCALE_DEFAULT));
+        //ImageIcon logo = new ImageIcon(new ImageIcon("data/logo.png").
+        // getImage().getScaledInstance(270, 200, Image.SCALE_DEFAULT));
         ImageIcon logo = new ImageIcon("data/newlogo.png");
         logoLabel = new JLabel(logo);
         logoLabel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         controlPanel.add(logoLabel, BorderLayout.SOUTH);
     }
 
-    // Code inspired from online to make a double input panel
+    // NOTE: Code inspired from online to make a double input panel
+    // EFFECTS: gets required name and number from user
     public List<String> useDoublePanelPlayers(String message) {
         JTextField fieldX = new JTextField(5);
         JTextField fieldY = new JTextField(5);
@@ -428,6 +468,7 @@ public class TeamManagerGUI extends JFrame {
         return ret;
     }
 
+    // EFFECTS: gets information to create a game from the user
     public List useDoublePanelGames() {
         String message = "Enter away team name and goals scored";
         JTextField fieldX = new JTextField(5);
@@ -448,6 +489,7 @@ public class TeamManagerGUI extends JFrame {
         return ret;
     }
 
+    // EFFECTS: Gets the jersey numbers of the goalscorers from user
     public List<Integer> getHomeScorers() {
         List<Integer> scorers = new ArrayList<Integer>();
         Integer goals = Integer.valueOf(
@@ -461,6 +503,7 @@ public class TeamManagerGUI extends JFrame {
     }
 
 
+    // EFFECTS: displays the names in a single string
     public String display(List<String> names) {
         String display = "";
         for (String s : names) {
