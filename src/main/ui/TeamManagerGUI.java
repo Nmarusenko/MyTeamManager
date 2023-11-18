@@ -26,11 +26,14 @@ public class TeamManagerGUI extends JFrame {
     private JDesktopPane desktop;
     private JInternalFrame controlPanel;
     private NameDisplayUI nameDisplayUI;
+    private JPanel buttonPanel;
+    private JLabel logoLabel;
 
 
 
 
     public TeamManagerGUI() {
+        buttonPanel = new JPanel();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         team = new Team("MyTeamName");
@@ -45,7 +48,7 @@ public class TeamManagerGUI extends JFrame {
         setSize(WIDTH, HEIGHT);
 
         addButtonPanel();
-        addTeamNameDisplayPanel();
+        addTeamNameAndLogo();
 
         controlPanel.pack();
         controlPanel.setVisible(true);
@@ -64,8 +67,7 @@ public class TeamManagerGUI extends JFrame {
     }
 
     private void addButtonPanel() {
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(6,2));
+        buttonPanel.setLayout(new GridLayout(4,3));
         buttonPanel.add(new JButton(new AddPlayerAction()));
         buttonPanel.add(new JButton(new AddGameRatingAction()));
         buttonPanel.add(new JButton(new RemovePlayerAction()));
@@ -80,6 +82,7 @@ public class TeamManagerGUI extends JFrame {
         buttonPanel.add(new JButton(new FilterByGoalsAction()));
         buttonPanel.add(new JButton(new SaveToFileAction()));
         buttonPanel.add(new JButton(new LoadFromFileAction()));
+
 
 
         controlPanel.add(buttonPanel, BorderLayout.WEST);
@@ -397,9 +400,14 @@ public class TeamManagerGUI extends JFrame {
         }
     }
 
-    private void addTeamNameDisplayPanel() {
+    private void addTeamNameAndLogo() {
         nameDisplayUI = new NameDisplayUI(team.getName());
         controlPanel.add(nameDisplayUI, BorderLayout.NORTH);
+        //ImageIcon logo = new ImageIcon(new ImageIcon("data/logo.png").getImage().getScaledInstance(270, 200, Image.SCALE_DEFAULT));
+        ImageIcon logo = new ImageIcon("data/newlogo.png");
+        logoLabel = new JLabel(logo);
+        logoLabel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        controlPanel.add(logoLabel, BorderLayout.SOUTH);
     }
 
     // Code inspired from online to make a double input panel
@@ -460,6 +468,8 @@ public class TeamManagerGUI extends JFrame {
         }
         return display;
     }
+
+
 
 
 }
