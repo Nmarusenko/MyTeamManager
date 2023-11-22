@@ -442,8 +442,8 @@ public class TeamManagerGUI extends JFrame {
         nameDisplayUI = new NameDisplayUI(team.getName());
         controlPanel.add(nameDisplayUI, BorderLayout.NORTH);
         //ImageIcon logo = new ImageIcon(new ImageIcon("data/logo.png").
-        // getImage().getScaledInstance(270, 200, Image.SCALE_DEFAULT));
-        ImageIcon logo = new ImageIcon("data/newlogo.png");
+        //getImage().getScaledInstance(270, 200, Image.SCALE_DEFAULT));
+        ImageIcon logo = new ImageIcon("data/finallogo.PNG");
         logoLabel = new JLabel(logo);
         logoLabel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         controlPanel.add(logoLabel, BorderLayout.SOUTH);
