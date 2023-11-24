@@ -32,7 +32,8 @@ public class TeamManagerGUI extends JFrame {
     private NameDisplayUI nameDisplayUI;
     private JPanel buttonPanel;
     private JLabel logoLabel;
-
+    private JList currDisplay;
+    private DefaultListModel<String> stringList;
 
 
 
@@ -53,6 +54,7 @@ public class TeamManagerGUI extends JFrame {
         setSize(WIDTH, HEIGHT);
 
         addButtonPanel();
+        createPlayersAndGamesPanel();
         addTeamNameAndLogo();
 
         controlPanel.pack();
@@ -64,8 +66,29 @@ public class TeamManagerGUI extends JFrame {
         setVisible(true);
     }
 
+    // EFFECTS: Display the current state of the team in an updating panel
+    private void createPlayersAndGamesPanel() {
+        stringList = new DefaultListModel<>();
+        stringList.addElement("Players: ");
+        currDisplay = new JList(stringList);
+        JScrollPane scroll = new JScrollPane(currDisplay);
+        scroll.setVisible(true);
+        controlPanel.add(scroll);
+        System.out.println(stringList.getSize());
+    }
 
-    // EFFECTS: Centers the panel on theh screen
+    // EFFECTS: Updates the players panel when an action happens to a player
+    private void updatePlayersPanel() {
+        stringList.clear();
+        stringList.addElement("Players: ");
+        for (Player p : team.getPlayers()) {
+            stringList.addElement(p.getName() + " (" + p.getJerseyNum() + ")" + " - Rating: " + p.averageRating()
+                    + " - Goals: " + p.getGoals());
+        }
+    }
+
+
+    // EFFECTS: Centers the panel on the screen
     private void centreOnScreen() {
         int width = Toolkit.getDefaultToolkit().getScreenSize().width;
         int height = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -74,7 +97,7 @@ public class TeamManagerGUI extends JFrame {
 
     // EFFECTS: Adds all the buttons to the panel
     private void addButtonPanel() {
-        buttonPanel.setLayout(new GridLayout(4,3));
+        buttonPanel.setLayout(new GridLayout(7, 2));
         buttonPanel.add(new JButton(new AddPlayerAction()));
         buttonPanel.add(new JButton(new AddGameRatingAction()));
         buttonPanel.add(new JButton(new RemovePlayerAction()));
@@ -89,12 +112,8 @@ public class TeamManagerGUI extends JFrame {
         buttonPanel.add(new JButton(new FilterByGoalsAction()));
         buttonPanel.add(new JButton(new SaveToFileAction()));
         buttonPanel.add(new JButton(new LoadFromFileAction()));
-
-
-
         controlPanel.add(buttonPanel, BorderLayout.WEST);
     }
-
 
 
     // Sets up the mouse
@@ -131,6 +150,7 @@ public class TeamManagerGUI extends JFrame {
                                 + team.getName(), "Success",
                         JOptionPane.PLAIN_MESSAGE);
             }
+            updatePlayersPanel();
         }
     }
 
@@ -161,6 +181,7 @@ public class TeamManagerGUI extends JFrame {
                             JOptionPane.ERROR_MESSAGE);
                 }
             }
+            updatePlayersPanel();
         }
     }
 
@@ -187,6 +208,7 @@ public class TeamManagerGUI extends JFrame {
                         "Successfully removed " + name + " from " + team.getName(), "Success",
                         JOptionPane.PLAIN_MESSAGE);
             }
+            updatePlayersPanel();
         }
     }
 
@@ -281,6 +303,7 @@ public class TeamManagerGUI extends JFrame {
             JOptionPane.showMessageDialog(null,
                     "Successfully added the game: " + game.displayGame(), "Success",
                     JOptionPane.PLAIN_MESSAGE);
+            updatePlayersPanel();
         }
     }
 
@@ -329,7 +352,7 @@ public class TeamManagerGUI extends JFrame {
         // EFFECTS: Action performed when calculating a teams points
         public void actionPerformed(ActionEvent evt) {
             int points = team.getPoints();
-            JOptionPane.showInternalMessageDialog(null,team.getName() + " has "
+            JOptionPane.showInternalMessageDialog(null, team.getName() + " has "
                             + points + " points from their games",
                     "+3 points for win, +1 for tie, +0 for loss", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -351,6 +374,7 @@ public class TeamManagerGUI extends JFrame {
             if (num == 0) {
                 saveTeam();
             }
+            updatePlayersPanel();
         }
     }
 
@@ -370,6 +394,7 @@ public class TeamManagerGUI extends JFrame {
                 loadTeam();
                 nameDisplayUI.update(team.getName());
             }
+            updatePlayersPanel();
         }
     }
 
@@ -423,6 +448,7 @@ public class TeamManagerGUI extends JFrame {
                     "Unable to write to file: " + JSON_STORE, "System Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+        updatePlayersPanel();
     }
 
     // MODIFIES: this
@@ -441,8 +467,6 @@ public class TeamManagerGUI extends JFrame {
     private void addTeamNameAndLogo() {
         nameDisplayUI = new NameDisplayUI(team.getName());
         controlPanel.add(nameDisplayUI, BorderLayout.NORTH);
-        //ImageIcon logo = new ImageIcon(new ImageIcon("data/logo.png").
-        //getImage().getScaledInstance(270, 200, Image.SCALE_DEFAULT));
         ImageIcon logo = new ImageIcon("data/finallogo.PNG");
         logoLabel = new JLabel(logo);
         logoLabel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -511,8 +535,6 @@ public class TeamManagerGUI extends JFrame {
         }
         return display;
     }
-
-
 
 
 }
