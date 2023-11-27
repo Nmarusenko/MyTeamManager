@@ -15,6 +15,7 @@ import java.util.Scanner;
 // Represents the Team Manager App. The Team Manager App will allow the user to
 // construct a team for themselves and add as many players and games as they want
 // to their team
+// This class is the UI that is designed to work in console
 public class TeamManagerConsole {
     private static final String JSON_STORE = "./data/myFile.json";
     private JsonWriter jsonWriter;

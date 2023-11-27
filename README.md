@@ -34,3 +34,7 @@ and filling out the required fields.
 - You can locate my visual component by looking to the bottom of the panel
 - You can save the state of my application by clicking the save to file button
 - You can reload the state of my application by clicking the load to file button. 
+
+
+Did not put the event log in average rating for a single player since when we filter by average rating we call this
+method and it would make the event log too cluttery. Piazza post to confirm this is ok: post #1488

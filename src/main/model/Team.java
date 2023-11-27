@@ -31,6 +31,7 @@ public class Team implements Writable {
         games.add(game);
         updatePoints();
         updateGoalScorers(game);
+        EventLog.getInstance().logEvent(new Event("New Game logged for " + name));
     }
 
     // MODIFIES: this
@@ -75,6 +76,8 @@ public class Team implements Writable {
             return false;
         } else {
             players.add(newPlayer);
+            EventLog.getInstance().logEvent(new Event("Successfully added new player: "
+                    + newPlayer.getName() + " (" + newPlayer.getJerseyNum() + ")" + " to " + name));
             return true;
         }
     }
@@ -85,6 +88,7 @@ public class Team implements Writable {
         for (Player player : players) {
             list.add(player.getName() + ", " + player.getJerseyNum());
         }
+        EventLog.getInstance().logEvent(new Event("Viewed: all players"));
         return list;
     }
 
@@ -105,6 +109,7 @@ public class Team implements Writable {
         for (Player player : players) {
             if (player.getJerseyNum() == number && (player.getName()).equals(name)) {
                 players.remove(player);
+                EventLog.getInstance().logEvent(new Event("Removed " + name + " from " + name));
                 return true;
             }
         }
@@ -117,6 +122,7 @@ public class Team implements Writable {
         for (Game game : games) {
             display.add(game.displayGame());
         }
+        EventLog.getInstance().logEvent(new Event("Displayed all games"));
         return display;
     }
 
@@ -129,6 +135,7 @@ public class Team implements Writable {
                 ret.add(p.getName() + ", " + p.getJerseyNum() + " - Rating: " + p.averageRating());
             }
         }
+        EventLog.getInstance().logEvent(new Event("Viewed: filtered players by " + num + " rating"));
         return ret;
     }
 
@@ -140,10 +147,12 @@ public class Team implements Writable {
                 ret.add(p.getName() + ", " + p.getJerseyNum() + " - " + p.getGoals() + " goals");
             }
         }
+        EventLog.getInstance().logEvent(new Event("Viewed: filtered players by " + num + " goals"));
         return ret;
     }
 
     public void setName(String name) {
+        EventLog.getInstance().logEvent(new Event("Team name set to: " + name));
         this.name = name;
     }
 
@@ -170,6 +179,7 @@ public class Team implements Writable {
         json.put("name", name);
         json.put("players", playersToJson());
         json.put("games", gamesToJson());
+        EventLog.getInstance().logEvent(new Event("Team saved to file"));
         return json;
     }
 

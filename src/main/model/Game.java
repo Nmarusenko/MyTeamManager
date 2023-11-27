@@ -2,13 +2,14 @@ package model;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import persistence.Writable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents a game score that has a home team, an away team, goals for either team
 // and a list of goalscorers for the home team.
-public class Game {
+public class Game implements Writable {
 
     private String homeTeam;
     private String awayTeam;

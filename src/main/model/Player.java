@@ -45,6 +45,7 @@ public class Player implements Writable {
     public Boolean addRating(double number) {
         if (0 <= number && number <= 10) {
             ratings.add(number);
+            EventLog.getInstance().logEvent(new Event("Rating of " + number + " added for " + name));
             return true;
         } else {
             return false;
@@ -68,6 +69,7 @@ public class Player implements Writable {
     }
 
     public int getGoals() {
+        EventLog.getInstance().logEvent(new Event("Viewed: Goals for " + name));
         return goals;
     }
 
