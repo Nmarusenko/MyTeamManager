@@ -64,13 +64,13 @@ public class TeamManagerGUI extends JFrame {
     // EFFECTS: adds the button panel, logo, team name and players panel
     private void addPanels() {
         addButtonPanel();
-        createPlayersAndGamesPanel();
+        createPlayersPanel();
         addTeamNameAndLogo();
     }
 
 
     // EFFECTS: Display the current state of the team in an updating panel
-    private void createPlayersAndGamesPanel() {
+    private void createPlayersPanel() {
         stringList = new DefaultListModel<>();
         stringList.addElement("Players: ");
         currDisplay = new JList(stringList);

@@ -17,11 +17,11 @@ software to manage all of our past games.
 ## User Stories
 - As a user I want to be able to log games to a team
 - As a user I want to be able to create players for my team
-- As a user I want to be able to access a list of all players on a team
-- As a user I want to be able to access all the games my team has played
-- As a user I want to be able to navigate through menus to control games and players on my team
+- As a user I want to be able to see a list of all players on a team
+- As a user I want to be able to see all the games my team has played
 - As a user I want to be able to view average game ratings from players on my team
 - As a user I want to be able to remove players from a team
+- As a user I want to be able to filter the players on my team by their rating and goals
 - As a user I want to be able to view how many goals each player on my team has
 - As a user I want to be able to save my team to file
 - As a user I want to be able to have the option to load up a team from file
@@ -67,3 +67,27 @@ Viewed: filtered players by 0.0 rating
 Tue Nov 28 18:49:10 PST 2023 <br>
 Viewed: filtered players by 0 goals
 
+### Phase 4: Task 3
+#### Note to grader:
+There was confusion on piazza about what to do with the UML diagram
+when you have a class inside a class. The consensus was to go with
+a line leading to a circle with a cross in it. You can see this happen many times
+with classes being inside TeamManagerGUI. 
+
+#### Possible Improvements: 
+The note to grader above leads into what I could've done better with the
+design of this project. My TeamManagerGUI class is way too cluttered and does not follow the
+single responsibility principle. That class has very low cohesion and as it is doing many things at the same time. 
+To refactor this I would make several new classes. One of them being a panel with all the functional
+buttons being located on it. I could then remove most of the subclasses inside TeamManagerGUI,
+and it would be a lot cleaner. I would also certainly have another class creating the prompt
+panels for the user. For this project I needed to create different prompts with different numbers of inputs 
+for the user and these should've been in their own class and not in the same cluttered class as everything else. 
+Splitting up TeamMangerGUI into at least 2 other classes would've increased the cohesion and made
+for a better design of this project. 
+
+If I had more time on this project, something I would do would be to make it more user-friendly. By this I mean
+that there are currently some scenarios the user can get some exceptions thrown at them if they do not use the app as 
+designed. For example if you leave the player number blank when adding a player, a null pointer exception will occur. 
+Something I could add would be some catch blocks that lead to immediate error messages and the opportunity to prompt
+the user for correct input. 
