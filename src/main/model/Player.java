@@ -69,7 +69,6 @@ public class Player implements Writable {
     }
 
     public int getGoals() {
-        EventLog.getInstance().logEvent(new Event("Viewed: Goals for " + name));
         return goals;
     }
 

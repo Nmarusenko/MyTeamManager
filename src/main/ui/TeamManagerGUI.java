@@ -7,10 +7,8 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import java.awt.event.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,6 +25,7 @@ public class TeamManagerGUI extends JFrame {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
     private Team team;
+    private JFrame frame;
     private JDesktopPane desktop;
     private JInternalFrame controlPanel;
     private NameDisplayUI nameDisplayUI;
@@ -37,7 +36,7 @@ public class TeamManagerGUI extends JFrame {
 
 
 
-    //EFFECTS: runs the team manager
+    //EFFECTS: sets up panels + JSON and runs the team manager
     public TeamManagerGUI() {
         buttonPanel = new JPanel();
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -45,26 +44,30 @@ public class TeamManagerGUI extends JFrame {
         team = new Team("MyTeamName");
         desktop = new JDesktopPane();
         desktop.addMouseListener(new DesktopFocusAction());
-        controlPanel = new JInternalFrame("Control Panel",
-                false, false, false, false);
+        controlPanel = new JInternalFrame("Control Panel", false, false, false, false);
         controlPanel.setLayout(new BorderLayout());
-
+        frame = new JFrame("My Team Manager");
+        frame.add(desktop);
         setContentPane(desktop);
         setTitle("My Team Manager");
         setSize(WIDTH, HEIGHT);
-
-        addButtonPanel();
-        createPlayersAndGamesPanel();
-        addTeamNameAndLogo();
-
+        addPanels();
         controlPanel.pack();
         controlPanel.setVisible(true);
         desktop.add(controlPanel);
-
+        this.addWindowListener(new WindowAction());
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         centreOnScreen();
         setVisible(true);
     }
+
+    // EFFECTS: adds the button panel, logo, team name and players panel
+    private void addPanels() {
+        addButtonPanel();
+        createPlayersAndGamesPanel();
+        addTeamNameAndLogo();
+    }
+
 
     // EFFECTS: Display the current state of the team in an updating panel
     private void createPlayersAndGamesPanel() {
@@ -74,7 +77,6 @@ public class TeamManagerGUI extends JFrame {
         JScrollPane scroll = new JScrollPane(currDisplay);
         scroll.setVisible(true);
         controlPanel.add(scroll);
-        System.out.println(stringList.getSize());
     }
 
     // EFFECTS: Updates the players panel when an action happens to a player
@@ -535,6 +537,8 @@ public class TeamManagerGUI extends JFrame {
         }
         return display;
     }
+
+
 
 
 }

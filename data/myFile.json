@@ -18,7 +18,10 @@
         {
             "player name": "Owen",
             "player number": 17,
-            "player ratings": [9.4]
+            "player ratings": [
+                9.4,
+                5
+            ]
         },
         {
             "player name": "Liam",

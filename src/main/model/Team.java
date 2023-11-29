@@ -1,9 +1,11 @@
 package model;
 
+import persistence.JsonReader;
 import persistence.Writable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +33,8 @@ public class Team implements Writable {
         games.add(game);
         updatePoints();
         updateGoalScorers(game);
-        EventLog.getInstance().logEvent(new Event("New Game logged for " + name));
+        EventLog.getInstance().logEvent(new Event("New Game logged for " + name + ": "
+                + game.getHomeTeam() + " - " + game.getAwayTeam()));
     }
 
     // MODIFIES: this
@@ -109,7 +112,7 @@ public class Team implements Writable {
         for (Player player : players) {
             if (player.getJerseyNum() == number && (player.getName()).equals(name)) {
                 players.remove(player);
-                EventLog.getInstance().logEvent(new Event("Removed " + name + " from " + name));
+                EventLog.getInstance().logEvent(new Event("Removed " + name + " from " + this.name));
                 return true;
             }
         }
@@ -203,6 +206,5 @@ public class Team implements Writable {
         }
         return jsonArray;
     }
-
 
 }

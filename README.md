@@ -35,6 +35,35 @@ and filling out the required fields.
 - You can save the state of my application by clicking the save to file button
 - You can reload the state of my application by clicking the load to file button. 
 
+### Phase 4: Task 2
+If a user were to open this application, they would probably start by setting a team name. Then they would add a couple players,
+maybe remove one, then add a game rating to these players. The user can now do player filtering such as filter by rating and filter by goals.
+Once the user closes the application, this is what the print to the console should look like: 
 
-Did not put the event log in average rating for a single player since when we filter by average rating we call this
-method and it would make the event log too cluttery. Piazza post to confirm this is ok: post #1488
+Tue Nov 28 18:48:17 PST 2023 <br>
+Team name set to: Rangers
+
+
+Tue Nov 28 18:48:24 PST 2023 <br>
+Successfully added new player: Noah (8) to Rangers
+
+
+Tue Nov 28 18:48:30 PST 2023 <br>
+Successfully added new player: Aiden (10) to Rangers
+
+
+Tue Nov 28 18:48:38 PST 2023 <br>
+Removed Aiden from Rangers
+
+
+Tue Nov 28 18:49:00 PST 2023 <br>
+Rating of 8.5 added for Noah
+
+
+Tue Nov 28 18:49:07 PST 2023 <br>
+Viewed: filtered players by 0.0 rating
+
+
+Tue Nov 28 18:49:10 PST 2023 <br>
+Viewed: filtered players by 0 goals
+
